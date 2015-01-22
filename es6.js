@@ -3,12 +3,6 @@
 var exec = require('child_process').exec;
 var program = require('commander');
 
-// 6to5 --modules amd -a ~/projects/es6-module-amd/examples/test.js
-
-function list(value) {
-    return value.split(',').map(String);
-}
-
 var curDir = process.cwd();
 
 program
@@ -18,6 +12,12 @@ program
     .version('0.0.1')
     .parse(process.argv);
 
+
+// Example:
+// node-debug es6.js --modules amd -a -o ~/Desktop/output -d /Users/iliyan/projects/es6-module-amd/examples /Users/iliyan/projects/es6-module-amd/examples
+// -d to 6to5 means that this will be the output directory, in our program it is specified via -o option and this is ~/Desktop/output
+// -d for us means the working directory - in the example above: /Users/iliyan/projects/es6-module-amd/examples
+// finally, we pass program.output as list of files and folders to be processed there
     var options = [
     '--modules',
     'amd',
@@ -27,7 +27,6 @@ program
     program.args.join(' ')
 ];
 
-debugger;
 exec('6to5 ' + options.join(' '), {
     cwd: program.directory
 }, function (error, stdout, stderr) {
